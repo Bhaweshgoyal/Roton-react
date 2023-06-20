@@ -1,0 +1,31 @@
+.page-heading {
+  font-size: 70px;
+  font-weight: 800;
+}
+.cart-page {
+  display: flex;
+  width: 100%;
+  margin-top: 55px;
+  justify-content: space-evenly;
+}
+.item-details {
+  display: flex;
+  width: 45vw;
+}
+
+.item-price {
+  display: flex;
+  justify-content: flex-end;
+  bottom: 0;
+  position: relative;
+  font-weight: 800;
+  margin-left: 20%;
+  height: max-content;
+}
+.cart-icon {
+  width: 50px;
+  height: 50px;
+}
+.btn-buy {
+    margin-bottom: 15px;
+}

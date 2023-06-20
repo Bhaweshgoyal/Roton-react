@@ -1,10 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ContextData1 } from "../App";
 import "../CSS/OrderPage.css";
 function OrderPage() {
   const ProductOrder = useLocation();
-
+  const [today, setToday] = useState(new Date());
+  let locale = "en";
+  const time = today.toLocaleTimeString(locale, {
+    hour: "numeric",
+    hour12: true,
+    minute: "numeric",
+  });
   return (
     <div className="order-details">
       <div className="checked-Circle">
@@ -25,10 +30,13 @@ function OrderPage() {
       </div>
       <div className="paymentDiv">
         <span>Payment Success !</span>
-        <div className="orderPrice">&#8377; {ProductOrder.state.data.price}</div>
-        <div className="productName">{ProductOrder.state.data.name}</div>
+        <div className="productName">{time}</div>
+        <div className="orderPrice">
+          &#8377; {ProductOrder.state.data.total}
+        </div>
         <div className="transferId">
-         Transfer - ID A{Math.floor(Math.random() * (100000000 - 100000 + 1)) + 100000}
+          Transfer - ID A
+          {Math.floor(Math.random() * (100000000 - 100000 + 1)) + 100000}
         </div>
       </div>
     </div>

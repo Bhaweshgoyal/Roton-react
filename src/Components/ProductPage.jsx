@@ -3,7 +3,7 @@ import axios from "axios";
 import "../CSS/ProductPage.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-function ProductPage(props) {
+function ProductPage({ searchvalue }) {
   const [dataItem, setDataItem] = useState([]);
 
   useEffect(() => {
@@ -17,13 +17,23 @@ function ProductPage(props) {
 
       let response = await axios.request(config);
       setDataItem(response.data.result);
-    })(); 
+    })();
   }, []);
+  let ans = dataItem.filter((item) => {
+    const title = item.name.toLowerCase();
+    const description = item.description.toLowerCase();
+    const price = item.price.toString();
+    return (
+      title.includes(searchvalue) ||
+      description.includes(searchvalue) ||
+      price.includes(searchvalue)
+    );
+  });
   return (
     <>
       <div className="Product-page">
-        {dataItem &&
-          dataItem.map((item, index) => {
+        {ans &&
+          ans.map((item, index) => {
             return (
               <Link
                 to={`/product/${item.id}&${item.name}`}
@@ -36,8 +46,9 @@ function ProductPage(props) {
                     src: item.imgSrc,
                   },
                 }}
+                key = {index}
               >
-                <div className="product-tile" key={index}>
+                <div className="product-tile" >
                   <img
                     src={item.imgSrc}
                     alt=""

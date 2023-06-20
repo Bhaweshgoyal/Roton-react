@@ -1,8 +1,19 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import "../CSS/ProductDescp.css";
-function ProductDescp() {
+import CommonUtils from "./CommonUtils/CommonUtils";
+function ProductDescp({ orderId }) {
+  let [Clicked , setClicked] = useState(false)
   let data = useLocation();
+  async function addToCart() {
+    await CommonUtils.addProductToOrder(
+      orderId,
+      data.state.data.id
+    );
+
+     await CommonUtils.orderAtProduct(orderId);
+    setClicked(true)
+  }
   return (
     <>
       <div className="Product-desc-landing">
@@ -12,20 +23,9 @@ function ProductDescp() {
         <div className="about-product">
           <span className="desc-product">{data.state.data.description}</span>
           <div className="price-product">&#8377; {data.state.data.price}</div>
-          <Link
-            to={`/order/${data.state.data.name}`}
-            state={{
-              data: {
-                name: data.state.data.name,
-                price: data.state.data.price,
-                id : data.state.data.id   
-              },
-            }}
-          >
-            <div className="btn-buy">
-              <button>Buy Now</button>
-            </div>
-          </Link>
+          <div className="btn-buy">
+            <button onClick={addToCart}>{Clicked === true ? "Add more " : "Add to Cart"}</button>
+          </div>
         </div>
       </div>
     </>

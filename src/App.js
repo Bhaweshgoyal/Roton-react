@@ -8,12 +8,13 @@ import { createContext } from "react";
 import axios from "axios";
 import ProductDescp from "./Components/ProductDescp";
 import OrderPage from "./Components/OrderPage";
+import Productcart from "./Components/Productcart";
 export const ContextData = createContext();
 export const ContextData1 = createContext();
-const orderContetxt = createContext();
 function App() {
   const [data, setdata] = useState([]);
-  const [orderId, setorderId] = useState([]);
+  const [orderId, setOrderId] = useState(1);
+  const [value , setValue] = useState("") ; 
 
   useEffect(() => {
     (async () => {
@@ -22,36 +23,44 @@ function App() {
         maxBodyLength: Infinity,
         url: "http://localhost:8080/api/v1/order/create-order",
         headers: {},
-      };          
+      };
+      const response = await axios.request(config);
+      const { data: responseData } = response;
 
-      let response = await axios.request(config);
-      setorderId(response.data.result.id);
-    })();
+      if (responseData && responseData.result && responseData.result.id) {
+        const id = responseData.result.id;
+        setOrderId(+id);
+      }
+    }
+    )();
   }, []);
-  // console.log(orderId , "orderIdorderIdorderIdorderIdorderIdorderId")
   return (
     <BrowserRouter>
-      <NavComponent />
+      <NavComponent  searchvalue = {value} searchFunc = {setValue}/>
       <div className="App">
         <Routes>
-          <Route exact path="/" element={<Carousel />} />
           <Route
-            path="/product"
+            exact
+            path="/"
             element={
-              <ContextData.Provider>
-                <ProductPage />
-              </ContextData.Provider>
+              <div className="homepage-landing">
+                <Carousel />
+                <ContextData.Provider  >
+                  <ProductPage  searchvalue = {value}/>
+                </ContextData.Provider>
+              </div>
             }
           />
-          <Route path="/product/:productId" element={<ProductDescp />} />
+          <Route path="/product/:productId" element={<ProductDescp orderId = {orderId}/>} />
           <Route
             path="/order/:orderId"
             element={
-              <ContextData1.Provider value={{ data, setdata , orderId }}>
+              <ContextData1.Provider value={{ data, setdata, orderId }}>
                 <OrderPage />
               </ContextData1.Provider>
             }
           />
+          <Route path = "/cart" element = {<Productcart orderId = {orderId}/>} />
         </Routes>
       </div>
     </BrowserRouter>
