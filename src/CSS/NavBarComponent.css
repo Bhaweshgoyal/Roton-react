@@ -1,0 +1,49 @@
+.NavBar{
+    top: 0;
+    /* width: 100%; */
+    border-bottom: 2px solid ;
+    /* border-color: black; */
+    position: sticky;
+    background-color: RGB(245 245 250);
+    height: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+}
+.Home-icon{
+    font-weight: 900;
+    font-size: 30px;
+    margin : 0 ; 
+    margin-top: 20px;
+}
+.searchField{
+    height: 1rem;
+    border: none;
+    width : 45vw ;
+    border-radius: 20px;
+    margin-top : 20px;
+    transition-duration: 0.7s;
+    padding: 10px;
+    font-size: large;
+    text-align: center;
+}
+.searchField:hover {
+    z-index: 100;
+    transform: scale(1.1);
+    border: 1px solid black  ;
+}
+.heading{
+    color: black;
+    font-size: 40px;
+    /* font-family: ; */
+    margin-top: 10px;
+}
+
+.SearchIcon{
+    margin-top: 25px;
+    cursor: pointer;
+}
+a {
+    color: black;
+}
